@@ -94,29 +94,65 @@ The app has two tabs:
    Knowledge base, Inference engine, User interface, Knowledge acquisition mechanisms,
    Explanation mechanisms.**
 
+ - Knowledge base: This is the set of four IF–THEN rules (R1–R4) plus the fixed customer/system profiles (A–E). It represents all the knowledge encoded by human experts that the system can use to make decisions.
+- Inference engine: The part of the app that applies the rules to the facts in each profile. It checks conditions one by one, decides whether they are satisfied, and determines which rules “fire.”
+- User interface: The Streamlit app itself — the two tabs where you can read the rules, select a profile, click through the inference process, and view the Final Summary. It’s how humans interact with the system.
+- Knowledge acquisition mechanisms: In this app, it’s the original process of encoding the rules and profiles into the system. A human expert wrote them once, and they are fixed — no randomness or learning.
+- Explanation mechanisms: The step-by-step display that shows why each rule fired or failed, plus the Final Summary. This makes the system transparent and easy to understand.
+
+
 **2. Fill in the blank: the IF-THEN format used by every rule in ShopSmart's knowledge base is
    traditionally called a **______ rule**.**
+- The IF–THEN format used by every rule in ShopSmart’s knowledge base is traditionally called a production rule.
+- Production rules are the standard way expert systems represent knowledge: each rule has conditions (IF) and actions (THEN).
+
 
 **3. For **Profile A**, which rule(s) fire, and what is the resulting conclusion?**
+- Rule(s) fired: R1 — Loyalty Discount.
+- Resulting conclusion: Offer a 10% discount on the next purchase.
+- Explanation: Camila is a returning customer with 650 loyalty points, which satisfies both conditions of R1. However, her cart total is only $45, so she does not qualify for free shipping (R2). No IT rules apply because there are no failed logins or server stress.
+
 
 **4. For **Profile B**, which rule(s) fire, and what is the resulting conclusion?**
+- Rule(s) fired: R2 — Free Shipping.
+- Resulting conclusion: Unlock free shipping.
+- Explanation: Even though this visitor is not a returning customer and has zero loyalty points, they are on the checkout page with a cart total of $150. That satisfies both conditions of R2, so free shipping is granted. No other rules apply.
 
 **5. For **Profile C**, does the **Account Lockout (R3)** rule fire? Name the exact condition
    (fact name and its actual value for Profile C) that determines the answer.**
-
+- Does R3 fire? No.
+- Condition determining the answer: ip_flagged = True.
+- Explanation: The Account Lockout rule requires failed_logins > 3 and ip_flagged = False. Profile C has a flagged IP, so the condition fails. Even though this profile has 800 loyalty points, they are not on the checkout page, so no business rules fire either. The Final Summary shows no rules applied.
 
 **6. For **Profile D**, how many rules fire in total? List every resulting conclusion.**
+- Total rules fired: 3 (R1, R2, R4).
+- Resulting conclusions:
+  - Offer a 10% discount (loyalty points = 1200).
+  - Unlock free shipping (cart total = $250, checkout page = True).
+  - Trigger emergency cooling and alert IT (CPU load and temperature above thresholds).
+- Explanation: This profile represents a heavy shopper during a stressed system. It qualifies for both business benefits and an IT alert. Only the Account Lockout rule does not apply because there are no failed logins.
 
 **7. For **Profile E**, how many rules fire? What does the Final Summary say?**
+- Total rules fired: 0.
+- Final Summary: No rules applied.
+- Explanation: This profile has no loyalty points, is not a returning customer, is not on the checkout page, and shows no IT issues. Therefore, none of the rules are triggered.
 
 **8. True or False: ShopSmart's inference engine starts from a hypothesis (like "this account
    should be locked") and works backward to check whether the facts support it. Justify your
    answer using the term **"forward chaining"** or **"backward chaining."****
 
+   
+False.  
+- ShopSmart’s inference engine uses forward chaining. That means it starts from the known facts in each profile (e.g., loyalty points, cart total, server load) and moves forward, checking each rule to see if the conditions are satisfied. Backward chaining would start from a hypothesis (like “this account should be locked”) and work backward to see if the facts support it, but that is not how this app works.
+
 **9. Propose **one new IF-THEN rule**, written in the same format as R1–R4, that ShopSmart could
    add for IT, Business, or a user-experience/design concern not already covered by the
    existing four rules. State which department it belongs to.**
+- R5 — Cart Abandonment Reminder (UX/Business)
+- IF on_checkout_page = True AND cart_total > 0 AND checkout_inactivity_minutes > 10 THEN send a reminder notification to the customer.
 
+  - Department: User Experience / Business.
+- Explanation: This rule would help reduce cart abandonment by reminding customers who leave items in their cart without completing checkout. It adds a UX-focused decision not covered by the existing rules.
 
 
 ---
