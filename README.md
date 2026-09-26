@@ -72,7 +72,7 @@ The app has two tabs:
 <img width="255" height="87" alt="image" src="https://github.com/user-attachments/assets/06d7ceda-7990-4038-a1c1-b212de8b3623" />
 
 ### Profile D — Big Spender, System Under Load
-- **Final Summary:** 3 of 4 rules fired.
+- **Final Summary:** 4 of 4 rules fired.
 - **Conclusion:** Offer a 10% discount, unlock free shipping, and trigger emergency cooling/alert IT.
 - **Comment:** This profile qualifies for loyalty discount (1200 points), free shipping (cart total $250), and server alert (system under load). Only the account lockout rule did not apply.
 
